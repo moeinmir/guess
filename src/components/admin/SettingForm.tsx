@@ -3,12 +3,11 @@ import { Button, TextField, Box, Typography } from "@mui/material";
 import { useAdmin } from "contexts/AdminContext";
 
 const SettingForm = () => {
-  const { changeAdmin , changeFeeReceiverAddress} = useAdmin();
+  const { changeAdmin, changeFeeReceiverAddress, changeOwner, isOwner } = useAdmin();
   const [newAdminAddress, setNewAdminAddress] = useState("");
   const [newFeeReceiverAddress, setNewFeeReceiverAddress] = useState("");
-
+  const [newOwnerAddress, setNewOwnerAddress] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleChangeAdmin = async () => {
     setIsSubmitting(true);
     try {
@@ -18,17 +17,24 @@ const SettingForm = () => {
     }
   };
 
-  const handleChangeFeeReceiverAddress = async () =>{
+  const handleChangeOwner = async () => {
+    setIsSubmitting(true);
+    try {
+      await changeOwner(newOwnerAddress);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-    setIsSubmitting(true)
-    try{
-        await changeFeeReceiverAddress(newFeeReceiverAddress)
+  const handleChangeFeeReceiverAddress = async () => {
+    setIsSubmitting(true);
+    try {
+      await changeFeeReceiverAddress(newFeeReceiverAddress);
+    } finally {
+      setIsSubmitting(false);
     }
-    finally{
-        setIsSubmitting(false)
-    }
-  }
-  
+  };
+
   return (
     <>
       <Box sx={{ maxWidth: 500, mx: "auto" }}>
@@ -53,7 +59,7 @@ const SettingForm = () => {
         </Button>
       </Box>
 
-      <Box sx={{ maxWidth: 500, mx: "auto" }}>
+      {isOwner && <Box sx={{ maxWidth: 500, mx: "auto" }}>
         <Typography variant="h6" gutterBottom>
           Change Fee Receiver Address
         </Typography>
@@ -73,7 +79,29 @@ const SettingForm = () => {
         >
           {isSubmitting ? "Submitting..." : "Change fee receiver address"}
         </Button>
-      </Box>
+      </Box>}
+
+       {isOwner && <Box sx={{ maxWidth: 500, mx: "auto" }}>
+        <Typography variant="h6" gutterBottom>
+          Change Owner Address
+        </Typography>
+
+        <TextField
+          label="New Owner Address"
+          fullWidth
+          margin="normal"
+          value={newOwnerAddress}
+          onChange={(e) => setNewOwnerAddress(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          onClick={handleChangeOwner}
+          disabled={isSubmitting || !newOwnerAddress}
+          sx={{ mt: 2 }}
+        >
+          {isSubmitting ? "Submitting..." : "Change fee receiver address"}
+        </Button>
+      </Box>}
     </>
   );
 };

@@ -6,12 +6,14 @@ import { BetsProvider } from "contexts/BetsContext";
 import { ERC20Provider } from "contexts/ERC20TokenRepresentingUSDTContext";
 import { AdminProvider } from "contexts/AdminContext";
 import { BrowserRouter } from "react-router-dom";
+import { ToastProvider } from "contexts/ToastContext";
 // import Footer from "layout/CustomFooter";
 
 function App() {
   if (!window.Buffer) window.Buffer = Buffer;
   return (
     <BrowserRouter>
+      <ToastProvider>
       <UserProvider>
         <ERC20Provider>
           <BetsProvider>
@@ -23,7 +25,9 @@ function App() {
           </BetsProvider>
         </ERC20Provider>
       </UserProvider>
+      </ToastProvider>
     </BrowserRouter>
+ 
   );
 }
 export default App;

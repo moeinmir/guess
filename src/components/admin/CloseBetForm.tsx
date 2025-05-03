@@ -3,6 +3,7 @@ import { Button, TextField, Box, Typography } from '@mui/material';
 import { useAdmin } from 'contexts/AdminContext';
 import { useBets } from 'contexts/BetsContext';
 
+
 const CloseBetForm = () => {
   const { closeBet } = useAdmin();
   const [betId, setBetId] = useState('');

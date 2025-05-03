@@ -3,7 +3,8 @@ import { useWeb3React } from '@web3-react/core';
 import useContractWithABI from 'hooks/useContractWithABIAndAddress';
 import Erc20TokenABI from "../abis/ERC20TokenABI.json"
 import { ERC20TokenContractInterface } from 'interfaces/ERC20TokenContractInterface';
-
+import { useToast } from './ToastContext';
+import { formatChainError } from 'utils/formatters';
 interface ERC20ContextType {
   balance: bigint;
   allowance: bigint;
@@ -20,6 +21,7 @@ const ERC20Context = createContext<ERC20ContextType>({
 
 export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
   const { account } = useWeb3React();
+  const {showToast} = useToast();
   const [state, setState] = useState<{
     balance: bigint;
     allowance: bigint;
@@ -59,8 +61,7 @@ export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
       await refresh(); // Refresh allowance after approval
       
     } catch (error) {
-      console.error("Approval failed:", error);
-      throw error; // Re-throw for error handling in components
+      showToast(formatChainError(error))
     }
   };
 

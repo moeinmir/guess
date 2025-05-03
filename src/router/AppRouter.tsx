@@ -4,10 +4,10 @@ import AdminDashboard from "components/admin/AdminDashboard";
 import AddBetForm from "components/admin/AddBetForm";
 import CloseBetForm from "components/admin/CloseBetForm";
 import SettingForm from "components/admin/SettingForm";
-
+import ContractBalanceManagement from "components/admin/ContractBalanceManagement";
 const AppRoutes = () => {
-  const subdomain = process.env.REACT_APP_SUBDOMAIN || '';
-  
+  const subdomain = process.env.REACT_APP_SUBDOMAIN || "";
+
   const withSubdomain = (path: string) => {
     return subdomain ? `/${subdomain}${path}` : path;
   };
@@ -16,9 +16,13 @@ const AppRoutes = () => {
     <Routes>
       <Route path={withSubdomain("/")} element={<MainLayout />} />
       <Route path={withSubdomain("/admin")} element={<AdminDashboard />}>
-        <Route path="add-bet" element={<AddBetForm />}/>
+        <Route path="add-bet" element={<AddBetForm />} />
         <Route path="close-bet" element={<CloseBetForm />} />
-        <Route path="settings" element={<SettingForm />}/>
+        <Route path="settings" element={<SettingForm />} />
+        <Route
+          path="contract-balance-management"
+          element={<ContractBalanceManagement />}
+        />
       </Route>
     </Routes>
   );

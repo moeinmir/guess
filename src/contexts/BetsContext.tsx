@@ -4,6 +4,8 @@ import { useWeb3React } from '@web3-react/core';
 import useContractWithABI from 'hooks/useContractWithABIAndAddress';
 import GuessABI from '../abis/GuessABI.json';
 import { GuessContractInterface, Bet } from 'interfaces/GuessContractInterface';
+import { useToast } from './ToastContext';
+import { formatChainError } from 'utils/formatters';
 
 interface BetsContextType {
   activeBets: Bet[];
@@ -33,6 +35,7 @@ const BetsContext = createContext<BetsContextType>({
 
 export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
   const { account } = useWeb3React();
+  const { showToast } = useToast();
   const [state, setState] = useState<{
     activeBets: Bet[];
     closedBets: Bet[];
@@ -68,7 +71,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
       
       const bets: Bet[] = [];
       
-      for (let i = 1; i < lastBetId; i++) {
+      for (let i = 0; i < lastBetId; i++) {
         const bet = await guessContract.getBetInformation(BigInt(i));
         bets.push(bet);
       }
@@ -88,7 +91,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
         lastBetId,
       });
     } catch (error) {
-      console.error("Error fetching bets:", error);
+      showToast(formatChainError(error))
       setState(prev => ({ ...prev, loading: false }));
     }
   };
@@ -101,8 +104,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
       await tx.wait();
       await fetchBets();
     } catch (error) {
-      console.error("Error placing bet:", error);
-      throw error;
+      showToast(formatChainError(error))
     }
   };
 
@@ -114,8 +116,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
       await tx.wait();
       await fetchBets();
     } catch (error) {
-      console.error("Error claiming reward:", error);
-      throw error;
+      showToast(formatChainError(error))
     }
   };
 
@@ -128,8 +129,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
        // Refresh the list after claiming
       await fetchBets(); // Refresh other bet lists
     } catch (error) {
-      console.error("Error settling bet:", error);
-      throw error;
+      showToast(formatChainError(error))
     }
   };
   

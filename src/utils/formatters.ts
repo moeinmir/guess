@@ -4,19 +4,19 @@ import { formatUnits } from "ethers/lib/utils";
 export const n6 = new Intl.NumberFormat("en-us", {
   style: "decimal",
   minimumFractionDigits: 0,
-  maximumFractionDigits: 6
+  maximumFractionDigits: 6,
 });
 export const n4 = new Intl.NumberFormat("en-us", {
   style: "decimal",
   minimumFractionDigits: 0,
-  maximumFractionDigits: 4
+  maximumFractionDigits: 4,
 });
 
 export const c2 = new Intl.NumberFormat("en-us", {
   style: "currency",
   currency: "USD",
   minimumFractionDigits: 2,
-  maximumFractionDigits: 2
+  maximumFractionDigits: 2,
 });
 
 /**
@@ -32,7 +32,8 @@ export const getEllipsisTxt = (str: string, n = 6) => {
   return "";
 };
 
-export const tokenValue = (value: number, decimals: number) => (decimals ? value / Math.pow(10, decimals) : value);
+export const tokenValue = (value: number, decimals: number) =>
+  decimals ? value / Math.pow(10, decimals) : value;
 
 /**
  * Return a formatted string with the symbol at the end
@@ -41,8 +42,11 @@ export const tokenValue = (value: number, decimals: number) => (decimals ? value
  * @param {string} symbol token symbol
  * @returns {string}
  */
-export const tokenValueTxt = (value: number, decimals: number, symbol: string) =>
-  `${n4.format(tokenValue(value, decimals))} ${symbol}`;
+export const tokenValueTxt = (
+  value: number,
+  decimals: number,
+  symbol: string
+) => `${n4.format(tokenValue(value, decimals))} ${symbol}`;
 
 export function parseBigNumberToFloat(val: BigNumber, decimals = 18) {
   if (!val) {
@@ -54,7 +58,7 @@ export function parseBigNumberToFloat(val: BigNumber, decimals = 18) {
   return parsed;
 }
 
-///can be revisited 
+///can be revisited
 
 export const formatDate = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString();
@@ -65,13 +69,22 @@ export const formatUSDTToken = (value: bigint): string => {
   return value.toString();
 };
 
-
 // utils/format.ts
 export const formatUnit = (value: bigint, decimals: number): string => {
   // const divisor = BigInt(10) ** BigInt(1);
   // const whole = value / divisor;
   // const fractional = value % divisor;
-  console.log(decimals)
+  console.log(decimals);
   return value.toString();
   // return `${whole}.${fractional.toString().padStart(decimals, '0')}`;
+};
+
+export const formatChainError = (error: any): string => {
+  let errorMessage = "Failed to close bet";
+  if (error.code === 4001) {
+    errorMessage = "Transaction rejected by user";
+  } else if (error.message?.includes("reverted")) {
+    errorMessage = "Transaction reverted: " + error.reason || error.message;
+  }
+  return errorMessage;
 };

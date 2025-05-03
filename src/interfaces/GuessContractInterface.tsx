@@ -13,6 +13,7 @@ export interface Bet {
     collectedAmount: bigint;
     winingAmount: bigint;
     feeAmount: bigint;
+    maxSecondsBeforeDueForParticipation: bigint
   }
   
   interface Prediction {
@@ -32,7 +33,8 @@ export interface Bet {
       dueDate: bigint,
       description: string,
       baseStakeUnit: bigint,
-      feePercentage: bigint
+      feePercentage: bigint,
+      maxSecondsBeforeDueForParticipation: bigint,
     ): Promise<ContractTransaction>;
     
     betOn(
@@ -44,11 +46,28 @@ export interface Bet {
 
     adminAddress(): Promise<string>;
 
-    changeAdmin(newAdminAddress: string): Promise<ContractTransaction>;
+    ownerAddress(): Promise<string>;
+
+    ownerLastMessage(): Promise<string>;
+
+    usdLockedAmount(): Promise<bigint>;
+
+    getContractUSD(): Promise<bigint>;
+
+    getContractETH(): Promise<bigint>;
+
+    changeAdmin(newAdminAddress: string): Promise<ContractTransaction>; 
+
+    changeOwner(newOwnerAddress: string): Promise<ContractTransaction>;
+
+    cashOutEth(cashOutAmount: bigint): Promise<ContractTransaction>;  
+
+    cashOutUSD(cashOutAmount: bigint): Promise<ContractTransaction>;
     
     changeFeeReceiverAddress(newFeeReceiverAddress: string): Promise<ContractTransaction>;
+
     
-    changeOperator(newOperatorAddress: string): Promise<ContractTransaction>;
+    notifyUsers(message: string): Promise<ContractTransaction>;
     
     claimReward(betId: bigint): Promise<ContractTransaction>;
     

@@ -4,7 +4,8 @@ import useContractWithABI from 'hooks/useContractWithABIAndAddress';
 import GuessABI from "../abis/GuessABI.json"
 import { GuessContractInterface } from 'interfaces/GuessContractInterface';
 import { UserInformation } from 'interfaces/GuessContractInterface';
-
+import { formatChainError } from 'utils/formatters';
+import { useToast } from './ToastContext';
 
 
 interface UserContextType {
@@ -23,6 +24,7 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { account } = useWeb3React();
+  const {showToast} = useToast()
   const [state, setState] = useState<{
     userInfo: UserInformation | null;
     isRegistered: boolean | null;
@@ -56,7 +58,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         loading: false,
       });
     } catch (error) {
-      console.error("Error checking registration:", error);
+      showToast(formatChainError(error))
       setState({
         userInfo: null,
         isRegistered: false,

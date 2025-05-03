@@ -13,9 +13,13 @@ const AddBetForm = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState<Dayjs | null>(null);
   const [baseStake, setBaseStake] = useState("");
+  const [
+    maxSecondsBeforeDueForParticipation,
+    setMaxSecondsBeforeDueForParticipation,
+  ] = useState("");
   const [feePercentage, setFeePercentage] = useState("10");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {fetchBets} = useBets()
+  const { fetchBets } = useBets();
 
   const handleSubmit = async () => {
     if (!dueDate) return;
@@ -27,11 +31,12 @@ const AddBetForm = () => {
         BigInt(dueDateInSeconds),
         description,
         BigInt(Number(baseStake)), // Convert to token decimals
-        Number(feePercentage)
+        Number(feePercentage),
+        BigInt(Number(maxSecondsBeforeDueForParticipation))
       );
       // Reset form or show success
     } finally {
-      await fetchBets()
+      await fetchBets();
       setIsSubmitting(false);
     }
   };
@@ -67,6 +72,15 @@ const AddBetForm = () => {
         margin="normal"
         value={baseStake}
         onChange={(e) => setBaseStake(e.target.value)}
+      />
+
+      <TextField
+        label="Max Seconds Before Due To Participate"
+        type="number"
+        fullWidth
+        margin="normal"
+        value={maxSecondsBeforeDueForParticipation}
+        onChange={(e) => setMaxSecondsBeforeDueForParticipation(e.target.value)}
       />
 
       <TextField

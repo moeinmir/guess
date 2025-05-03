@@ -30,7 +30,10 @@ import {
           </Box>
           
           <Typography variant="body2" color="text.secondary" mt={1}>
-            Closed on: {formatDate(Number(bet.dueDate))}
+            Due: {formatDate(Number(bet.dueDate))}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mt={1}>
+            Closing Time: {formatDate(Number(bet.dueDate-bet.maxSecondsBeforeDueForParticipation))}
           </Typography>
           
           <Box mt={2}>

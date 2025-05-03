@@ -25,6 +25,11 @@
                 "internalType": "uint256",
                 "name": "feePercentage",
                 "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "maxSecondsBeforeDueForParticipation",
+                "type": "uint256"
             }
         ],
         "name": "addBet",
@@ -119,6 +124,11 @@
                 "internalType": "uint256",
                 "name": "feeAmount",
                 "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "maxSecondsBeforeDueForParticipation",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -174,6 +184,32 @@
     {
         "inputs": [
             {
+                "internalType": "uint256",
+                "name": "cashOutAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "cashOutEth",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "cashOutAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "cashOutUSD",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "address",
                 "name": "newAdminAddress",
                 "type": "address"
@@ -188,11 +224,24 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "newFeeRecieverAddress",
+                "name": "newFeeReceiverAddress",
                 "type": "address"
             }
         ],
         "name": "changeFeeReceiverAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwnerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "changeOwner",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -317,11 +366,42 @@
                         "internalType": "uint256",
                         "name": "feeAmount",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "maxSecondsBeforeDueForParticipation",
+                        "type": "uint256"
                     }
                 ],
                 "internalType": "struct Guess.Bet",
                 "name": "",
                 "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getContractETH",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getContractUSD",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -387,6 +467,45 @@
         "inputs": [
             {
                 "internalType": "string",
+                "name": "message",
+                "type": "string"
+            }
+        ],
+        "name": "notifyUsers",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "ownerAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "ownerLastMessage",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
                 "name": "userName",
                 "type": "string"
             }
@@ -420,6 +539,19 @@
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "uSDLockedAmount",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "address",
@@ -447,5 +579,9 @@
         ],
         "stateMutability": "view",
         "type": "function"
+    },
+    {
+        "stateMutability": "payable",
+        "type": "receive"
     }
 ]
