@@ -1,4 +1,4 @@
-import BetsDashboard from "components/BetsDashboard";
+import BetsDashboard from "components/betting/BetsDashboard";
 
 
 const LandingPage: React.FC = () => {

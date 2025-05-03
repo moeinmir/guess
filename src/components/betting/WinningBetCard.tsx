@@ -7,7 +7,7 @@ import {
     Chip,
     Stack
   } from '@mui/material';
-  import { formatDate, formatUnit } from '../utils/formatters';
+  import { formatDate, formatUnit } from '../../utils/formatters';
   import { Bet } from 'interfaces/GuessContractInterface';
   import { useState } from 'react';
   interface WinningBetCardProps {

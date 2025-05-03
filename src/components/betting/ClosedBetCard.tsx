@@ -6,7 +6,7 @@ import {
     Box, 
     Chip 
   } from '@mui/material';
-  import { formatDate, formatUSDTToken } from '../utils/formatters';
+  import { formatDate, formatUSDTToken } from '../../utils/formatters';
   import { Bet} from 'interfaces/GuessContractInterface';    
 
   interface ClosedBetCardProps {

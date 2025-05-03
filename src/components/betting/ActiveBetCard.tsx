@@ -12,10 +12,10 @@ import {
   import { useState, useEffect } from 'react';
   import { useBets } from 'contexts/BetsContext';
   import { useERC20TokenRepresentingUSDT } from 'contexts/ERC20TokenRepresentingUSDTContext';
-  import { formatDate, formatUnit } from '../utils/formatters';
+  import { formatDate, formatUnit } from '../../utils/formatters';
 
   
-  import {Bet} from "../interfaces/GuessContractInterface"
+  import {Bet} from "../../interfaces/GuessContractInterface"
 
   interface ActiveBetCardProps {
     bet: Bet;

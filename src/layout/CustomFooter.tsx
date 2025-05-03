@@ -26,7 +26,7 @@ const Footer = () => {
         py: 3,
         px: 2,
         width: '100%',
-
+       
         bottom: 0,
         left: 0,
         backgroundColor: theme.palette.mode === 'light' 

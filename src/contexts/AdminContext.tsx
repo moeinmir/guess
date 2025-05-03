@@ -69,6 +69,8 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     setState(prev => ({ ...prev, loading: true }));
     try {
       const address = await guessContract.adminAddress();
+      console.log("admin address")
+      console.log(address)
       setState({
         adminAddress: address,
         loading: false,
