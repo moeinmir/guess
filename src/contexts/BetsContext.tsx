@@ -177,8 +177,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const tx = await guessContract.claimReward(betId);
       await tx.wait();
-       // Refresh the list after claiming
-      await fetchBets(); // Refresh other bet lists
+      await fetchBets();
     } catch (error) {
       showToast(formatChainError(error))
     }
