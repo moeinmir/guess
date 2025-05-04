@@ -6,14 +6,18 @@ import {
     Box, 
     Chip 
   } from '@mui/material';
-  import { formatDate, formatUSDTToken } from '../../utils/formatters';
+  import { formatDate } from '../../utils/formatters';
   import { Bet} from 'interfaces/GuessContractInterface';    
+
+  import { tokenScaleDown } from '../../utils/formatters';
+import { useERC20TokenRepresentingUSDT } from 'contexts/ERC20TokenRepresentingUSDTContext';
 
   interface ClosedBetCardProps {
     bet: Bet;
   }
   
   const ClosedBetCard = ({ bet }: ClosedBetCardProps) => {
+    const {usdDecimals} = useERC20TokenRepresentingUSDT()
     return (
       <Card sx={{ mb: 2, backgroundColor: '#f5f5f5' }}>
         <CardContent>
@@ -38,10 +42,10 @@ import {
           
           <Box mt={2}>
             <Typography variant="body1">
-              Base Stake: {formatUSDTToken(bet.baseStakeUnit)} USDT
+              Base Stake: {tokenScaleDown(bet.baseStakeUnit.toString(),usdDecimals)} USDT
             </Typography>
             <Typography variant="body1">
-              Total Pool: {formatUSDTToken(bet.collectedAmount)} USDT
+              Total Pool: {tokenScaleDown(bet.collectedAmount.toString(),usdDecimals)} USDT
             </Typography>
             <Typography variant="body1" color="text.secondary">
               Awaiting settlement...

@@ -8,8 +8,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Dayjs } from "dayjs";
 import { useBets } from "contexts/BetsContext";
+import { useERC20TokenRepresentingUSDT } from "contexts/ERC20TokenRepresentingUSDTContext";
+import { tokenScaleUp } from "utils/formatters";
 const AddBetForm = () => {
   const { addBet } = useAdmin();
+  const {usdDecimals} = useERC20TokenRepresentingUSDT();
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState<Dayjs | null>(null);
   const [baseStake, setBaseStake] = useState("");
@@ -27,14 +30,15 @@ const AddBetForm = () => {
     const dueDateInSeconds = dueDate.unix();
     setIsSubmitting(true);
     try {
+
+      const baseStakeScaledUp = tokenScaleUp(baseStake,usdDecimals)
       await addBet(
         BigInt(dueDateInSeconds),
         description,
-        BigInt(Number(baseStake)), // Convert to token decimals
+        BigInt(baseStakeScaledUp),
         Number(feePercentage),
         BigInt(Number(maxSecondsBeforeDueForParticipation))
       );
-      // Reset form or show success
     } finally {
       await fetchBets();
       setIsSubmitting(false);

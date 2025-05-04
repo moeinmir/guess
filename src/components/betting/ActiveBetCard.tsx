@@ -12,7 +12,8 @@ import {
 import { useState, useEffect } from "react";
 import { useBets } from "contexts/BetsContext";
 import { useERC20TokenRepresentingUSDT } from "contexts/ERC20TokenRepresentingUSDTContext";
-import { formatDate, formatUnit } from "../../utils/formatters";
+import { formatDate } from "../../utils/formatters";
+import { tokenScaleDown } from "../../utils/formatters";
 
 import { Bet } from "../../interfaces/GuessContractInterface";
 
@@ -27,7 +28,7 @@ const ActiveBetCard = ({ bet, canBet }: ActiveBetCardProps) => {
   const [needsApproval, setNeedsApproval] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
   const { placeBet } = useBets();
-  const { allowance, refresh, approveToken } = useERC20TokenRepresentingUSDT();
+  const { allowance, refresh, approveToken, usdDecimals } = useERC20TokenRepresentingUSDT();
 
   useEffect(() => {
     if (canBet && bet.baseStakeUnit > allowance) {
@@ -84,7 +85,7 @@ const ActiveBetCard = ({ bet, canBet }: ActiveBetCardProps) => {
         </Typography>
 
         <Typography variant="body1" mt={2}>
-          Required Stake: {formatUnit(bet.baseStakeUnit, 18)} TOKEN
+          Required Stake: {tokenScaleDown(bet.baseStakeUnit.toString(),usdDecimals)} TOKEN
         </Typography>
 
         {needsApproval && (

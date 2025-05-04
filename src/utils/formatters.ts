@@ -88,3 +88,14 @@ export const formatChainError = (error: any): string => {
   }
   return errorMessage;
 };
+
+
+
+export const tokenScaleUp = (tokenUnits: string, decimals: number = 18, precision: number = 4) => {
+  console.log(precision)
+  return (Number(tokenUnits)*10**decimals).toString()
+}
+
+export const tokenScaleDown = (tokenUnits: string, decimals:number = 18, precision: number = 4) => {
+  return ((Number(tokenUnits)/(10**decimals)).toFixed(precision)).toString()
+}

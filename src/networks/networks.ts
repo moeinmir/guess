@@ -67,6 +67,12 @@ export const getNativeByChain = (chainId: number): string | undefined => {
   return undefined;
 };
 
+export const getNativeChainDecimals = (chainId: number): number =>{
+  const chainInformation = CHAINS[chainId];
+  if (isExtendedChainInformation(chainInformation)) return chainInformation.nativeCurrency.decimals;
+  return 18;
+}
+
 export const getExplorer = (chainId: number): string[] | undefined => {
   const chainInformation = CHAINS[chainId];
   if (isExtendedChainInformation(chainInformation)) return chainInformation.blockExplorerUrls;

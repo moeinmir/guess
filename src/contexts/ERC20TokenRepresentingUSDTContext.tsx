@@ -8,6 +8,7 @@ import { formatChainError } from 'utils/formatters';
 interface ERC20ContextType {
   balance: bigint;
   allowance: bigint;
+  usdDecimals: number;
   refresh: () => Promise<void>;
   approveToken: (amount: bigint) => Promise<void>;
 }
@@ -15,11 +16,13 @@ interface ERC20ContextType {
 const ERC20Context = createContext<ERC20ContextType>({
   balance: BigInt(0),
   allowance: BigInt(0),
+  usdDecimals: 0,
   refresh: async () => {},
   approveToken: async () => {},
 });
 
 export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
+
   const { account } = useWeb3React();
   const {showToast} = useToast();
   const [state, setState] = useState<{
@@ -34,6 +37,24 @@ export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
     process.env.REACT_APP_ERC20_TOKEN_REPRESENTING_USD_STABLE_COIN_CONTRACT_ADDRESS,
     Erc20TokenABI,
   );
+
+
+
+  const [usdDecimals, setDecimals] = useState<number>(0); 
+
+  
+  useEffect(()=>{
+    const fetchDecimals = async () => {
+      if (!erc20Contract) return;
+      try {
+        const dec = await erc20Contract.decimals();
+        setDecimals(Number(dec));
+      } catch {
+        console.log('error in fetching decimals')
+      }
+    };
+    fetchDecimals()
+  },[erc20Contract])
 
   const refresh = async () => {
     if (!account || !erc20Contract) return;
@@ -50,21 +71,17 @@ export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
     if (!account || !erc20Contract) {
       throw new Error("Wallet not connected or contract not initialized");
     }
-
     try {
       const tx = await erc20Contract.approve(
         process.env.REACT_APP_GUESS_CONTRACT_ADDRESS!,
         amount // Convert bigint to string for compatibility
       );
-      
       await tx.wait();
       await refresh(); // Refresh allowance after approval
-      
     } catch (error) {
       showToast(formatChainError(error))
     }
   };
-
 
   useEffect(() => {
     refresh();
@@ -74,6 +91,7 @@ export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
     <ERC20Context.Provider value={{
       balance: state.balance,
       allowance: state.allowance,
+      usdDecimals:usdDecimals ,
       refresh,
       approveToken,
     }}>

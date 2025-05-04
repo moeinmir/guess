@@ -2,7 +2,7 @@ import { ContractTransaction } from 'ethers';
 
 export interface ERC20TokenContractInterface {
 
-
+    
     // Functions
     _mint(account: string, value: bigint): Promise<void>;
     

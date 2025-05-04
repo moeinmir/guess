@@ -1,7 +1,9 @@
 import { Card, CardContent, Typography, Box, Chip } from "@mui/material";
 
-import { formatDate, formatUSDTToken } from "../../utils/formatters";
+import { formatDate } from "../../utils/formatters";
 import { Bet } from "interfaces/GuessContractInterface";
+import { tokenScaleDown } from "../../utils/formatters";
+import { useERC20TokenRepresentingUSDT } from "contexts/ERC20TokenRepresentingUSDTContext";
 
 interface SettledBetCardProps {
   bet: Bet;
@@ -9,6 +11,7 @@ interface SettledBetCardProps {
 }
 
 const SettledBetCard = ({ bet }: SettledBetCardProps) => {
+  const {usdDecimals} = useERC20TokenRepresentingUSDT();
   return (
     <Card sx={{ mb: 2 }}>
       <CardContent>
@@ -40,7 +43,7 @@ const SettledBetCard = ({ bet }: SettledBetCardProps) => {
         </Typography>
 
         <Typography variant="body1">
-          Prize Pool: {formatUSDTToken(bet.collectedAmount)} USDT
+          Prize Pool: {tokenScaleDown(bet.collectedAmount.toString(),usdDecimals)} USDT
         </Typography>
       </CardContent>
     </Card>
