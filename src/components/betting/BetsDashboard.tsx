@@ -7,7 +7,7 @@ import SettledBetCard from "./SettledBetCard";
 import ClosedBetCard from "./ClosedBetCard";
 import WinningBetCard from "./WinningBetCard";
 import SettledWinningBetCard from "./SettledWinningBetCard";
-
+import { Button } from "antd";
 const BetsDashboard = () => {
   const {
     activeBets,
@@ -17,6 +17,9 @@ const BetsDashboard = () => {
     settledWinningBets,
     loading,
     settleBet,
+    reversePageNumber,
+    callSetReversePageNumber,
+    isLastPage
   } = useBets();
   const { isRegistered } = useUser();
   const [tabValue, setTabValue] = useState(0);
@@ -30,7 +33,30 @@ const BetsDashboard = () => {
   }
 
   return (
+
     <Box sx={{ width: "100%" }}>
+
+
+      <Box display="flex" justifyContent="center" mt={2}>
+        <Button
+          disabled={reversePageNumber === 0}
+          onClick={() =>
+            callSetReversePageNumber(Number(reversePageNumber) - 1)
+          }
+        >
+          Previous
+        </Button>
+        <Typography mx={2}>Page {reversePageNumber.toString()}</Typography>
+        <Button
+          onClick={() =>
+            callSetReversePageNumber(Number(reversePageNumber) + 1)
+          }
+          disabled={isLastPage}
+        >
+          Next
+        </Button>
+      </Box>
+
       <Typography variant="h4" gutterBottom>
         Guess Away
       </Typography>
@@ -108,10 +134,7 @@ const BetsDashboard = () => {
           <Box>
             {settledWinningBets.length > 0 ? (
               settledWinningBets.map((bet) => (
-                <SettledWinningBetCard
-                  key={bet.id.toString()}
-                  bet={bet}
-                />
+                <SettledWinningBetCard key={bet.id.toString()} bet={bet} />
               ))
             ) : (
               <Typography>No winning bets yet</Typography>

@@ -7,6 +7,8 @@ import { GuessContractInterface, Bet } from 'interfaces/GuessContractInterface';
 import { useToast } from './ToastContext';
 import { formatChainError } from 'utils/formatters';
 
+const pageSize = 5
+
 interface BetsContextType {
   activeBets: Bet[];
   closedBets: Bet[];
@@ -18,6 +20,11 @@ interface BetsContextType {
   placeBet: (betId: bigint, guess: bigint) => Promise<void>;
   claimReward: (betId: bigint) => Promise<void>;
   settleBet: (betId: bigint) => Promise<void>;
+  reversePageNumber: Number;
+  lastBetId: Number;
+  callSetReversePageNumber: (page: number) => void
+  isLastPage: boolean
+
 }
 
 const BetsContext = createContext<BetsContextType>({
@@ -30,7 +37,12 @@ const BetsContext = createContext<BetsContextType>({
   fetchBets: async () => {},
   placeBet: async () => {},
   claimReward: async () => {},
-  settleBet:async() =>{}
+  settleBet:async() =>{},
+  reversePageNumber: 0,
+  lastBetId: 0,
+  callSetReversePageNumber: () => {},
+  isLastPage: false
+  
 });
 
 export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -44,6 +56,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
     settledWinningBets: Bet[];
     loading: boolean;
     lastBetId: bigint | null;
+    
   }>({
     activeBets: [],
     closedBets: [],
@@ -54,10 +67,45 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
     lastBetId: null,
   });
 
+  const [lastBetId,setLastBetId] = useState(0)
+  const [reversePageNumber,setReversePageNumber]= useState<number>(0)
+  const [isLastPage,setIsLastPage] = useState<boolean>(false)
+
+  
+
   const guessContract = useContractWithABI<GuessContractInterface>(
     process.env.REACT_APP_GUESS_CONTRACT_ADDRESS,
     GuessABI
   );
+
+  useEffect(()=>{
+    const fetchLastBetId = async () => {
+      let lastBetId = await guessContract?.getNextBetId();
+      setLastBetId(Number(lastBetId))
+    }
+    fetchLastBetId()
+  },[guessContract])
+  
+  useEffect(()=>{},[
+
+  ])
+
+  useEffect(()=>{
+    const checkIsLastPage = () =>{
+      if ((reversePageNumber+1)*pageSize>lastBetId){
+        setIsLastPage(true)
+      }
+      else{
+        setIsLastPage(false)
+      }
+    }
+    checkIsLastPage()
+  },[reversePageNumber,lastBetId])
+
+
+  const callSetReversePageNumber = (reversePageNumber: number) => {
+    setReversePageNumber(reversePageNumber);
+  }
 
 
   const fetchBets = async () => {
@@ -66,16 +114,19 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
     setState(prev => ({ ...prev, loading: true }));
     
     try {
-
-      const lastBetId = await guessContract.getNextBetId();
-      
+      let lastBetId = await guessContract.getNextBetId();
       const bets: Bet[] = [];
       
-      for (let i = 0; i < lastBetId; i++) {
+      
+
+      
+      let startIndex = (Number(lastBetId) - (reversePageNumber+1)*pageSize)<0 ? 0 : Number(lastBetId) - (reversePageNumber+1)*pageSize
+      let endIndex = (Number(lastBetId) - (reversePageNumber)*pageSize)> lastBetId ? lastBetId : Number(lastBetId) - (reversePageNumber)*pageSize
+
+      for (let i = startIndex; i < endIndex; i++) {
         const bet = await guessContract.getBetInformation(BigInt(i));
         bets.push(bet);
       }
-      
       const activeBets = bets.filter(bet => bet.isActive && !bet.isClosed );
       const closedBets = bets.filter(bet => bet.isClosed && !bet.isSettled);
       const settledBets = bets.filter(bet => bet.isSettled);
@@ -136,7 +187,7 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     fetchBets();
-  }, [account, guessContract]);
+  }, [account, guessContract,reversePageNumber]);
 
   return (
     <BetsContext.Provider value={{
@@ -149,7 +200,11 @@ export const BetsProvider = ({ children }: { children: React.ReactNode }) => {
       fetchBets,
       placeBet,
       claimReward,
-      settleBet
+      settleBet,
+      reversePageNumber:reversePageNumber,
+      lastBetId:lastBetId,
+      callSetReversePageNumber,
+      isLastPage:isLastPage
     }}>
       {children}
     </BetsContext.Provider>
