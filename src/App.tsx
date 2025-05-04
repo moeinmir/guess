@@ -7,8 +7,8 @@ import { ERC20Provider } from "contexts/ERC20TokenRepresentingUSDTContext";
 import { AdminProvider } from "contexts/AdminContext";
 import { BrowserRouter } from "react-router-dom";
 import { ToastProvider } from "contexts/ToastContext";
-// import Footer from "layout/CustomFooter";
-
+import Footer from "layout/CustomFooter";
+import "App.css"
 function App() {
   if (!window.Buffer) window.Buffer = Buffer;
   return (
@@ -20,7 +20,7 @@ function App() {
             <AdminProvider>
                 <CustomHeader />
                   <AppRoutes />
-                {/* <Footer /> */}
+                <Footer />
             </AdminProvider>
           </BetsProvider>
         </ERC20Provider>
@@ -31,3 +31,4 @@ function App() {
   );
 }
 export default App;
+

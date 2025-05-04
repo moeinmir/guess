@@ -107,7 +107,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isModalOpen, setIsModalOpen
             fontWeight: 500,
           },
         }}
-        sx={{ zIndex: -1 }}
+        // sx={{ zIndex: -1 }}
       >
         <DialogContent>
           <div style={styles.modalTitle}>Connect Your Wallet</div>
@@ -119,23 +119,18 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isModalOpen, setIsModalOpen
               onClick={() => activateConnector("MetaMask")}
               loading={isMMActivating}
             />
-
             <ConnectButton
-
-            
               label="WalletConnect"
               image={walletconnect_Logo}
               onClick={() => activateConnector("WalletConnect")}
               loading={isWCActivating}
             />
-
             <ConnectButton
               label="Coinbase Wallet"
               image={coinbase_Logo}
               onClick={() => activateConnector("Coinbase Wallet")}
               loading={isCBActivating}
             />
-
             <Divider sx={{ marginTop: 2 }} />
           </div>
         </DialogContent>

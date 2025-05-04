@@ -19,7 +19,7 @@ const BetsDashboard = () => {
     settleBet,
     reversePageNumber,
     callSetReversePageNumber,
-    isLastPage
+    isLastPage,
   } = useBets();
   const { isRegistered } = useUser();
   const [tabValue, setTabValue] = useState(0);
@@ -33,10 +33,7 @@ const BetsDashboard = () => {
   }
 
   return (
-
     <Box sx={{ width: "100%" }}>
-
-
       <Box display="flex" justifyContent="center" mt={2}>
         <Button
           disabled={reversePageNumber === 0}

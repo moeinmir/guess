@@ -1,13 +1,11 @@
 import { 
-  Box, 
-  Divider, 
+  Box,  
   Typography, 
   Link, 
   Stack,
   useTheme,
   useMediaQuery
 } from "@mui/material";
-
 
 const Footer = () => {
   const theme = useTheme();
@@ -23,88 +21,91 @@ const Footer = () => {
     <Box 
       component="footer"
       sx={{
-        py: 3,
-        px: 2,
+        py: 0.2,
         width: '100%',
-       
+        position: 'fixed',
         bottom: 0,
         left: 0,
         backgroundColor: theme.palette.mode === 'light' 
           ? theme.palette.grey[200] 
           : theme.palette.grey[800],
         zIndex: theme.zIndex.appBar - 1,
+        borderTop: `1px solid ${theme.palette.divider}` // Added subtle border
       }}
     >
-      <Divider sx={{ mb: 2 }} />
-      
       <Stack 
         direction={isMobile ? 'column' : 'row'}
-        spacing={isMobile ? 1 : 4}
+        spacing={isMobile ? 0.5 : 2} // Reduced spacing
         justifyContent="center"
         alignItems="center"
-        divider={
-          <Divider 
-            orientation={isMobile ? "horizontal" : "vertical"} 
-            flexItem 
-          />
-        }
       >
         <Box textAlign="center">
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="caption" gutterBottom> {/* Changed to smaller variant */}
             Guess Contract
           </Typography>
           <Link
             href={`${explorerUrl}/address/${guessContractAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              fontSize: '0.75rem' // Smaller font
+            }}
           >
-            {isMobile ? 'View' : 'View Contract'} 
-
+            {isMobile ? 'View' : 'View Contract'}
           </Link>
         </Box>
 
         <Box textAlign="center">
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="caption" gutterBottom>
             USDT Contract
           </Typography>
           <Link
             href={`${explorerUrl}/address/${erc20TokenRepresentingUsdStableCoinContractAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              fontSize: '0.75rem'
+            }}
           >
-            {isMobile ? 'View' : 'View Token'} 
-      
+            {isMobile ? 'View' : 'View Token'}
           </Link>
         </Box>
 
         <Box textAlign="center">
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="caption" gutterBottom>
             Block Explorer
           </Typography>
           <Link
             href={explorerUrl}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              fontSize: '0.75rem'
+            }}
           >
             Sepolia Etherscan
-
           </Link>
         </Box>
-      </Stack>
-
-      <Divider sx={{ mt: 2 }} />
-      
-      <Typography 
-        variant="body2" 
+        <Typography 
+        variant="caption" // Smaller variant
         color="text.secondary" 
         align="center"
-        sx={{ mt: 2 }}
+        sx={{ mt: 1 }} // Reduced margin
       >
-        © {new Date().getFullYear()} Guess Protocol. All rights reserved.
+        © {new Date().getFullYear()} Guess Protocol
       </Typography>
+      </Stack>
+
+
     </Box>
   );
 };

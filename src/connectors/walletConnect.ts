@@ -8,9 +8,15 @@ export const [walletConnect, hooks] = initializeConnector<WalletConnect>(
   (actions) =>
 
     new WalletConnect({
+      
       actions,
       
       options: {
+        qrModalOptions: {
+          themeVariables: {
+            '--wcm-z-index': '9999'
+          }
+        },
         projectId: process.env.REACT_APP_WALLETCONNECT_PROJECT_ID ?  process.env.REACT_APP_WALLETCONNECT_PROJECT_ID:"",
         chains: [11155111],
         optionalChains,
@@ -29,3 +35,4 @@ export const [walletConnect, hooks] = initializeConnector<WalletConnect>(
 
 
 // 11155111
+
