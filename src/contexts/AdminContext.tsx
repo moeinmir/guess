@@ -33,7 +33,6 @@ interface AdminContextType {
     betId: bigint,
     outcome: bigint
    ) => Promise<void>;
-
 }
 
 const AdminContext = createContext<AdminContextType>({

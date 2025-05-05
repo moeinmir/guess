@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Button, TextField, Box, Typography } from "@mui/material";
 import { useAdmin } from "contexts/AdminContext";
+import { useUser } from "contexts/UserContext";
 
 const SettingForm = () => {
-  const { changeAdmin, changeFeeReceiverAddress, changeOwner, isOwner } = useAdmin();
+  const { changeAdmin, changeFeeReceiverAddress, changeOwner, isOwner, notifyUsers } = useAdmin();
+  const {refreshBasicInfo} = useUser()
   const [newAdminAddress, setNewAdminAddress] = useState("");
   const [newFeeReceiverAddress, setNewFeeReceiverAddress] = useState("");
   const [newOwnerAddress, setNewOwnerAddress] = useState("");
+  const [newOwnerMessage,setNewOwnerMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChangeAdmin = async () => {
     setIsSubmitting(true);
@@ -34,6 +37,17 @@ const SettingForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  const handleNotifyUsers = async () => {
+    setIsSubmitting(true);
+    try {
+      await notifyUsers(newOwnerMessage)
+      refreshBasicInfo()
+    }
+    finally{
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <>
@@ -102,6 +116,29 @@ const SettingForm = () => {
           {isSubmitting ? "Submitting..." : "Change fee receiver address"}
         </Button>
       </Box>}
+
+      {isOwner && <Box sx={{ maxWidth: 500, mx: "auto" }}>
+        <Typography variant="h6" gutterBottom>
+          Notify Users
+        </Typography>
+
+        <TextField
+          label="New Owner Message"
+          fullWidth
+          margin="normal"
+          value={newOwnerMessage}
+          onChange={(e) => setNewOwnerMessage(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          onClick={handleNotifyUsers}
+          disabled={isSubmitting || !newOwnerMessage}
+          sx={{ mt: 2 }}
+        >
+          {isSubmitting ? "Submitting..." : "Notify Users"}
+        </Button>
+      </Box>}
+
     </>
   );
 };
