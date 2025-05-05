@@ -5,6 +5,7 @@ import AddBetForm from "components/admin/AddBetForm";
 import CloseBetForm from "components/admin/CloseBetForm";
 import SettingForm from "components/admin/SettingForm";
 import ContractBalanceManagement from "components/admin/ContractBalanceManagement";
+
 const AppRoutes = () => {
   const subdomain = process.env.REACT_APP_SUBDOMAIN || "";
 
@@ -24,6 +25,24 @@ const AppRoutes = () => {
           element={<ContractBalanceManagement />}
         />
       </Route>
+
+      <Route
+        path={withSubdomain("/docs.pdf")}
+        element={
+          <div style={{ height: "100vh" }}>
+             <iframe
+            title="docpdf"
+              src="/docs.pdf"
+              width="100%"
+              height="100%"
+              style={{ border: "none" }}
+            /> 
+
+
+            ssssssssssssssssssssss
+          </div>
+        }
+      />
     </Routes>
   );
 };
