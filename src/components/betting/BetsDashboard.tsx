@@ -188,5 +188,4 @@ const BetsDashboard = () => {
     </Box>
   );
 };
-
 export default BetsDashboard;
