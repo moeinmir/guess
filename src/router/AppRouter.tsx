@@ -8,15 +8,14 @@ import ContractBalanceManagement from "components/admin/ContractBalanceManagemen
 
 const AppRoutes = () => {
   const subdomain = process.env.REACT_APP_SUBDOMAIN || "";
+  console.log(subdomain)
 
-  const withSubdomain = (path: string) => {
-    return subdomain ? `/${subdomain}${path}` : path;
-  };
+
 
   return (
     <Routes>
-      <Route path={withSubdomain("/")} element={<MainLayout />} />
-      <Route path={withSubdomain("/admin")} element={<AdminDashboard />}>
+      <Route path={"/"} element={<MainLayout />} />
+      <Route path={"/admin"} element={<AdminDashboard />}>
         <Route path="add-bet" element={<AddBetForm />} />
         <Route path="close-bet" element={<CloseBetForm />} />
         <Route path="settings" element={<SettingForm />} />
@@ -27,7 +26,7 @@ const AppRoutes = () => {
       </Route>
 
       <Route
-        path={withSubdomain("/docs.pdf")}
+        path={"/docs.pdf"}
         element={
           <div style={{ height: "100vh" }}>
              <iframe
@@ -37,9 +36,6 @@ const AppRoutes = () => {
               height="100%"
               style={{ border: "none" }}
             /> 
-
-
-            ssssssssssssssssssssss
           </div>
         }
       />

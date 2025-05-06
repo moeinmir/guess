@@ -8,15 +8,15 @@ import { useNavigate } from "react-router-dom";
 const CustomHeader: React.FC = () => {
   const { isAdmin } = useAdmin();
   const navigate = useNavigate();
-  const subdomain = process.env.REACT_APP_SUBDOMAIN || '';
+
   const handleAdminClick = () => {
     
-    navigate(subdomain ? `/${subdomain}${"/admin/add-bet"}` : "/admin/add-bet");
+    navigate( "/admin/add-bet");
   };
 
 
   const navigateHome = () => {
-    navigate(`/${subdomain}`);
+    navigate("/");
   };
   return (
     <>

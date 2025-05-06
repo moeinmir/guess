@@ -12,7 +12,7 @@ import "App.css"
 function App() {
   if (!window.Buffer) window.Buffer = Buffer;
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.REACT_APP_SUBDOMAIN} >
       <ToastProvider>
       <UserProvider>
         <ERC20Provider>
