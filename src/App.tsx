@@ -12,7 +12,7 @@ import "App.css"
 function App() {
   if (!window.Buffer) window.Buffer = Buffer;
   return (
-    <BrowserRouter basename={process.env.REACT_APP_PUBLIC_URL} >
+    <BrowserRouter basename={'guess'} >
       <ToastProvider>
       <UserProvider>
         <ERC20Provider>

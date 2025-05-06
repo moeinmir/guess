@@ -7,11 +7,6 @@ import SettingForm from "components/admin/SettingForm";
 import ContractBalanceManagement from "components/admin/ContractBalanceManagement";
 
 const AppRoutes = () => {
-  const subdomain = process.env.REACT_APP_SUBDOMAIN || "";
-  console.log(subdomain)
-
-
-
   return (
     <Routes>
       <Route path={"/"} element={<MainLayout />} />
