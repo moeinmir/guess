@@ -11,12 +11,12 @@ const CustomHeader: React.FC = () => {
 
   const handleAdminClick = () => {
     
-    navigate( "/admin/add-bet");
+    navigate( "guess/admin/add-bet");
   };
 
 
   const navigateHome = () => {
-    navigate("/");
+    navigate("/guess");
   };
   return (
     <>
