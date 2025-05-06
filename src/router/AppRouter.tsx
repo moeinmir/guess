@@ -21,7 +21,7 @@ const AppRoutes = () => {
       </Route>
 
       <Route
-        path={"/docs.pdf"}
+        path={"/guess/docs.pdf"}
         element={
           <div style={{ height: "100vh" }}>
              <iframe
