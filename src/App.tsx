@@ -12,7 +12,7 @@ import "App.css"
 function App() {
   if (!window.Buffer) window.Buffer = Buffer;
   return (
-    <BrowserRouter basename={'guess'} >
+    <BrowserRouter >
       <ToastProvider>
       <UserProvider>
         <ERC20Provider>

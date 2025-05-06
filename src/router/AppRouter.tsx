@@ -9,8 +9,8 @@ import ContractBalanceManagement from "components/admin/ContractBalanceManagemen
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path={"/"} element={<MainLayout />} />
-      <Route path={"/admin"} element={<AdminDashboard />}>
+      <Route path={"guess/"} element={<MainLayout />} />
+      <Route path={"guess/admin"} element={<AdminDashboard />}>
         <Route path="add-bet" element={<AddBetForm />} />
         <Route path="close-bet" element={<CloseBetForm />} />
         <Route path="settings" element={<SettingForm />} />
@@ -19,9 +19,8 @@ const AppRoutes = () => {
           element={<ContractBalanceManagement />}
         />
       </Route>
-
       <Route
-        path={"/guess/docs.pdf"}
+        path={"/docs.pdf"}
         element={
           <div style={{ height: "100vh" }}>
              <iframe
