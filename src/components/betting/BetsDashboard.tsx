@@ -178,7 +178,7 @@ const BetsDashboard = () => {
                 }}
               >
                 <Typography variant="h5" color="text.secondary">
-                  No Settled Winning Bets Available
+                  No Settled Winning Bets Yet
                 </Typography>
               </Box>
             )}
