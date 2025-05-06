@@ -10,6 +10,7 @@ import { Dayjs } from "dayjs";
 import { useBets } from "contexts/BetsContext";
 import { useERC20TokenRepresentingUSDT } from "contexts/ERC20TokenRepresentingUSDTContext";
 import { tokenScaleUp } from "utils/formatters";
+
 const AddBetForm = () => {
   const { addBet } = useAdmin();
   const {usdDecimals} = useERC20TokenRepresentingUSDT();
@@ -26,11 +27,11 @@ const AddBetForm = () => {
 
   const handleSubmit = async () => {
     if (!dueDate) return;
-
-    const dueDateInSeconds = dueDate.unix();
+    // const SECONDS_IN_MINUTES = 60
+    // const dueDateInSeconds = dueDate.unix() + dueDate.utcOffset()*SECONDS_IN_MINUTES;
+    const dueDateInSeconds = dueDate.unix()
     setIsSubmitting(true);
     try {
-
       const baseStakeScaledUp = tokenScaleUp(baseStake,usdDecimals)
       await addBet(
         BigInt(dueDateInSeconds),
@@ -65,6 +66,7 @@ const AddBetForm = () => {
             value={dueDate}
             onChange={(e) => setDueDate(e)}
             label="Due Date"
+       
           />
         </DemoContainer>
       </LocalizationProvider>

@@ -7,9 +7,12 @@ import {
   Chip,
   Stack,
 } from "@mui/material";
-import { formatDate, formatUnit } from "../../utils/formatters";
+import { formatDate } from "../../utils/formatters";
 import { Bet } from "interfaces/GuessContractInterface";
 import { useState } from "react";
+import { tokenScaleDown } from "../../utils/formatters";
+import { useERC20TokenRepresentingUSDT } from "contexts/ERC20TokenRepresentingUSDTContext";
+
 interface WinningBetCardProps {
   bet: Bet;
   onSettle: (betId: bigint) => Promise<void>;
@@ -17,6 +20,7 @@ interface WinningBetCardProps {
 
 const WinningBetCard = ({ bet, onSettle }: WinningBetCardProps) => {
   const [isSettling, setIsSettling] = useState(false);
+  const { usdDecimals } = useERC20TokenRepresentingUSDT();
 
   const handleSettle = async () => {
     setIsSettling(true);
@@ -51,10 +55,10 @@ const WinningBetCard = ({ bet, onSettle }: WinningBetCardProps) => {
 
         <Stack spacing={1} mt={2}>
           <Typography>
-            Your Reward: {formatUnit(bet.winingAmount, 18)} USDT
+            Your Reward: {tokenScaleDown(bet.winingAmount.toString(), usdDecimals)} USDT
           </Typography>
           <Typography>
-            Total Pool: {formatUnit(bet.collectedAmount, 18)} USDT
+            Total Pool: {tokenScaleDown(bet.collectedAmount.toString(), usdDecimals)} USDT
           </Typography>
 
           <Box mt={2}>

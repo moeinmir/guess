@@ -31,7 +31,7 @@ const ActiveBetCard = ({ bet, canBet }: ActiveBetCardProps) => {
   const { allowance, refresh, approveToken, usdDecimals } = useERC20TokenRepresentingUSDT();
 
   useEffect(() => {
-    if (canBet && bet.baseStakeUnit > allowance) {
+    if ( canBet && Number(bet.baseStakeUnit) > Number(allowance)) {
       setNeedsApproval(true);
     } else {
       setNeedsApproval(false);
@@ -63,6 +63,7 @@ const ActiveBetCard = ({ bet, canBet }: ActiveBetCardProps) => {
 
   return (
     <Card sx={{ mb: 2 }}>
+
       <CardContent>
         <Typography variant="body2" color="text.secondary" mt={1}>
           Bet Id: {bet.id.toString()}

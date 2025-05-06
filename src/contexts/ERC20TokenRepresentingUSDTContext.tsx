@@ -37,12 +37,7 @@ export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
     process.env.REACT_APP_ERC20_TOKEN_REPRESENTING_USD_STABLE_COIN_CONTRACT_ADDRESS,
     Erc20TokenABI,
   );
-
-
-
   const [usdDecimals, setDecimals] = useState<number>(0); 
-
-  
   useEffect(()=>{
     const fetchDecimals = async () => {
       if (!erc20Contract) return;
@@ -74,10 +69,10 @@ export const ERC20Provider = ({ children }: { children: React.ReactNode }) => {
     try {
       const tx = await erc20Contract.approve(
         process.env.REACT_APP_GUESS_CONTRACT_ADDRESS!,
-        amount // Convert bigint to string for compatibility
+        amount
       );
       await tx.wait();
-      await refresh(); // Refresh allowance after approval
+      await refresh();
     } catch (error) {
       showToast(formatChainError(error))
     }

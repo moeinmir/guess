@@ -23,7 +23,6 @@ const BetsDashboard = () => {
   } = useBets();
   const { isRegistered } = useUser();
   const [tabValue, setTabValue] = useState(0);
-
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" p={4}>
@@ -31,7 +30,6 @@ const BetsDashboard = () => {
       </Box>
     );
   }
-
   return (
     <Box sx={{ width: "100%" }}>
       <Box display="flex" justifyContent="center" mt={2}>
@@ -53,11 +51,9 @@ const BetsDashboard = () => {
           Next
         </Button>
       </Box>
-
       <Typography variant="h4" gutterBottom>
         Guess Away
       </Typography>
-
       <Tabs value={tabValue} onChange={(_, newValue) => setTabValue(newValue)}>
         <Tab label={`Active (${activeBets.length})`} />
         <Tab label={`Closed (${closedBets.length})`} />
@@ -65,7 +61,6 @@ const BetsDashboard = () => {
         <Tab label={`Unsettled Winning (${winningBets.length})`} />
         <Tab label={`Settled Winning (${settledWinningBets.length})`} />
       </Tabs>
-
       <Box mt={2}>
         {tabValue === 0 && (
           <Box>
@@ -78,11 +73,21 @@ const BetsDashboard = () => {
                 />
               ))
             ) : (
-              <Typography>No active bets available</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: "background.paper",
+                }}
+              >
+                <Typography variant="h5" color="text.secondary">
+                  No Active Bets Available
+                </Typography>
+              </Box>
             )}
           </Box>
         )}
-
         {tabValue === 1 && (
           <Box>
             {closedBets.length > 0 ? (
@@ -90,11 +95,21 @@ const BetsDashboard = () => {
                 <ClosedBetCard key={bet.id.toString()} bet={bet} />
               ))
             ) : (
-              <Typography>No closed bets available</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: "background.paper",
+                }}
+              >
+                <Typography variant="h5" color="text.secondary">
+                  No Closed Bets Available
+                </Typography>
+              </Box>
             )}
           </Box>
         )}
-
         {tabValue === 2 && (
           <Box>
             {settledBets.length > 0 ? (
@@ -106,11 +121,21 @@ const BetsDashboard = () => {
                 />
               ))
             ) : (
-              <Typography>No settled bets available</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: "background.paper",
+                }}
+              >
+                <Typography variant="h5" color="text.secondary">
+                  No Settled Bets Available
+                </Typography>
+              </Box>
             )}
           </Box>
         )}
-
         {tabValue === 3 && (
           <Box>
             {winningBets.length > 0 ? (
@@ -122,11 +147,21 @@ const BetsDashboard = () => {
                 />
               ))
             ) : (
-              <Typography>No winning bets yet</Typography>
+              <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                bgcolor: "background.paper",
+              }}
+            >
+              <Typography variant="h5" color="text.secondary">
+                No Winning Bets Yet
+              </Typography>
+            </Box>
             )}
           </Box>
         )}
-
         {tabValue === 4 && (
           <Box>
             {settledWinningBets.length > 0 ? (
@@ -134,7 +169,18 @@ const BetsDashboard = () => {
                 <SettledWinningBetCard key={bet.id.toString()} bet={bet} />
               ))
             ) : (
-              <Typography>No winning bets yet</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: "background.paper",
+                }}
+              >
+                <Typography variant="h5" color="text.secondary">
+                  No Settled Winning Bets Available
+                </Typography>
+              </Box>
             )}
           </Box>
         )}
