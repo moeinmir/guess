@@ -1,4 +1,10 @@
 /*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+
+/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
@@ -25,6 +31,8 @@ PERFORMANCE OF THIS SOFTWARE.
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 
 /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
@@ -115,6 +123,16 @@ PERFORMANCE OF THIS SOFTWARE.
  * react-is.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
