@@ -100,7 +100,7 @@ const Footer = () => {
           Documentation
         </Typography>
         <Link
-          href={"/docs.pdf"}
+          href={"https://moeinmir.github.io/guess/docs.pdf/docs.pdf"}
           target="_blank"
           rel="noopener noreferrer"
           sx={{
