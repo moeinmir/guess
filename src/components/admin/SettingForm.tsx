@@ -121,7 +121,7 @@ const SettingForm = () => {
             disabled={isSubmitting || !newOwnerAddress}
             sx={{ mt: 2 }}
           >
-            {isSubmitting ? "Submitting..." : "Change fee receiver address"}
+            {isSubmitting ? "Submitting..." : "Change Owner address"}
           </Button>
         </Box>
       )}

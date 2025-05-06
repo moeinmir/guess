@@ -15,7 +15,6 @@ const Footer = () => {
     process.env
       .REACT_APP_ERC20_TOKEN_REPRESENTING_USD_STABLE_COIN_CONTRACT_ADDRESS;
   const explorerUrl = "https://sepolia.etherscan.io";
-  // const subdomain = process.env.REACT_APP_SUBDOMAIN || "";
   return (
     <Box
       component="footer"
