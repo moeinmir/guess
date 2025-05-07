@@ -87,7 +87,7 @@ const RegisterModal: React.FC = () => {
             onChange={(e) => setUserName(e.target.value)}
           />
           <Typography variant="body2" sx={{ mt: 2 }}>
-            You'll receive a registration bonus after successful signup.
+            You'll receive a registration bonus after successful signup if the contract have the balance
           </Typography>
         </DialogContent>
         <DialogActions>
